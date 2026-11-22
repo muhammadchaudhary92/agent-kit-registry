@@ -1,0 +1,59 @@
+{
+  "id": "goose",
+  "name": "Goose",
+  "order": 190,
+  "description": "Block's open-source agent (YAML config).",
+  "detect": {
+    "commands": [
+      "goose"
+    ],
+    "paths": [
+      "{xdg_config}/goose"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "name": "{name}",
+          "type": "stdio",
+          "cmd": "{command}",
+          "args": "{args}",
+          "envs": "{env}",
+          "enabled": true,
+          "timeout": 300
+        },
+        "http": {
+          "name": "{name}",
+          "type": "streamable_http",
+          "uri": "{url}",
+          "enabled": true,
+          "timeout": 300
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [],
+      "notes": "Goose uses YAML (extensions in config.yaml) or \"goose configure\". The engine shows the fields; add them by hand."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

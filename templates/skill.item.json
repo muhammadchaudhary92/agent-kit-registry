@@ -1,0 +1,20 @@
+{
+  "id": "__ID__",
+  "kind": "skill",
+  "name": "__NAME__",
+  "status": "draft",
+  "summary": "TODO: one line, max ~140 characters",
+  "description": "__DESCRIPTION__",
+  "how_it_works": "TODO: what SKILL.md tells the agent to do and when it is triggered",
+  "categories": ["__CATEGORY__"],
+  "platforms": ["any"],
+  "tags": [],
+  "author": "__AUTHOR__",
+  "source": { "repo": "__REPO__", "homepage": "", "license": "__LICENSE__" },
+  "install": {
+    "skill": {
+      "name": "__ID__",
+      "source": { "type": "github", "repo": "__REPO__", "path": "TODO/path/to/skill-folder", "ref": "TODO-full-commit-sha" }
+    }
+  }
+}

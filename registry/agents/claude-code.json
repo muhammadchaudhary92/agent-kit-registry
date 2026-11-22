@@ -1,0 +1,133 @@
+{
+  "id": "claude-code",
+  "name": "Claude Code",
+  "order": 10,
+  "description": "Anthropic's coding agent (terminal, IDE, desktop).",
+  "detect": {
+    "env": [
+      "CLAUDECODE",
+      "CLAUDE_CODE_*"
+    ],
+    "commands": [
+      "claude"
+    ],
+    "paths": [
+      "{home}/.claude"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "type": "stdio",
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "type": "http",
+          "url": "{url}",
+          "headers": "{headers}"
+        },
+        "sse": {
+          "type": "sse",
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "env_ref": "${__NAME__}",
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "cli",
+          "command": "claude",
+          "scopes": {
+            "user": "user",
+            "project": "project"
+          },
+          "args": [
+            "mcp",
+            "add-json",
+            "--scope",
+            "{scope}",
+            "{name}",
+            "{json}"
+          ],
+          "replace_args": [
+            "mcp",
+            "remove",
+            "--scope",
+            "{scope}",
+            "{name}"
+          ],
+          "verify_args": [
+            "mcp",
+            "get",
+            "{name}"
+          ]
+        },
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{home}/.claude.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.mcp.json"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": true,
+      "post_install": "Restart Claude Code or run /mcp. Project-scope servers ask for approval on first use.",
+      "notes": "User scope uses the claude CLI when available, otherwise edits ~/.claude.json directly."
+    },
+    "skill": {
+      "support": "auto",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.claude/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.claude/skills"
+          }
+        }
+      },
+      "restart_required": false,
+      "post_install": "Skills are picked up in the next session (or after /reload)."
+    },
+    "plugin": {
+      "support": "auto",
+      "notes": "Installed with the claude plugin commands defined in the item steps."
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "high",
+    "sources": [
+      "https://code.claude.com/docs/en/mcp"
+    ]
+  }
+}

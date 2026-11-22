@@ -1,0 +1,15 @@
+{
+  "id": "demo-sse",
+  "kind": "mcp",
+  "name": "Demo SSE Server",
+  "status": "verified",
+  "summary": "Legacy SSE server.",
+  "description": "A legacy server that only speaks SSE.",
+  "how_it_works": "Remote SSE endpoint.",
+  "categories": ["other"],
+  "platforms": ["any"],
+  "author": "demo-author",
+  "source": { "homepage": "https://example.com/sse" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "install": { "mcp": { "transport": "sse", "url": "https://example.com/sse" } }
+}

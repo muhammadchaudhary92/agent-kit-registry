@@ -1,0 +1,34 @@
+{
+  "id": "__ID__",
+  "kind": "extension",
+  "name": "__NAME__",
+  "status": "draft",
+  "summary": "TODO: one line, max ~140 characters",
+  "description": "__DESCRIPTION__",
+  "how_it_works": "TODO: what the extension adds and how it is installed",
+  "categories": ["__CATEGORY__"],
+  "platforms": ["any"],
+  "tags": [],
+  "author": "__AUTHOR__",
+  "source": { "repo": "__REPO__", "homepage": "", "license": "__LICENSE__" },
+  "variants": [
+    {
+      "when": { "agent": ["gemini-cli"] },
+      "steps": [
+        { "type": "command", "command": "gemini", "args": ["extensions", "install", "https://github.com/TODO-owner/TODO-repo"], "description": "Install the Gemini CLI extension" }
+      ]
+    },
+    {
+      "when": { "agent": ["vscode-copilot"] },
+      "steps": [
+        { "type": "command", "command": "code", "args": ["--install-extension", "TODO-publisher.TODO-extension"], "description": "Install the VS Code extension" }
+      ]
+    },
+    {
+      "when": { "agent": ["cursor"] },
+      "steps": [
+        { "type": "command", "command": "cursor", "args": ["--install-extension", "TODO-publisher.TODO-extension"], "description": "Install the extension in Cursor" }
+      ]
+    }
+  ]
+}

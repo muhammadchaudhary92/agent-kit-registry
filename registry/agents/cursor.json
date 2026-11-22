@@ -1,0 +1,96 @@
+{
+  "id": "cursor",
+  "name": "Cursor",
+  "order": 60,
+  "description": "AI code editor (VS Code based).",
+  "detect": {
+    "commands": [
+      "cursor"
+    ],
+    "paths": [
+      "{home}/.cursor"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "url": "{url}",
+          "headers": "{headers}"
+        },
+        "sse": {
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "env_ref": "${env:__NAME__}",
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{home}/.cursor/mcp.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.cursor/mcp.json"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": true,
+      "post_install": "Reload Cursor (or toggle the server in Settings > MCP)."
+    },
+    "skill": {
+      "support": "guided",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.cursor/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.cursor/skills"
+          }
+        }
+      },
+      "notes": "Not verified. Confirm with the user, then pass --skills-dir."
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "auto",
+      "notes": "Use the cursor --install-extension command in the item steps."
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "high",
+    "sources": [
+      "https://cursor.com/docs/mcp"
+    ]
+  }
+}

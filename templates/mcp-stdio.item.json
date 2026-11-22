@@ -1,0 +1,29 @@
+{
+  "id": "__ID__",
+  "kind": "mcp",
+  "name": "__NAME__",
+  "status": "draft",
+  "summary": "TODO: one line, max ~140 characters",
+  "description": "__DESCRIPTION__",
+  "how_it_works": "TODO: how it runs and what it talks to (for example: starts locally with npx and calls the vendor API with your token)",
+  "categories": ["__CATEGORY__"],
+  "platforms": ["any"],
+  "tags": [],
+  "author": "__AUTHOR__",
+  "source": { "repo": "__REPO__", "homepage": "", "license": "__LICENSE__" },
+  "requires": {
+    "commands": [
+      { "name": "node", "min": "18", "hint": "Install Node.js 18 or newer from https://nodejs.org" },
+      { "name": "npx" }
+    ]
+  },
+  "inputs": [],
+  "install": {
+    "mcp": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "TODO-npm-package"],
+      "env": {}
+    }
+  }
+}

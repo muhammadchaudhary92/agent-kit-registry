@@ -1,0 +1,10 @@
+{
+  "id": "demo-draft",
+  "kind": "mcp",
+  "name": "Demo Draft Server",
+  "status": "draft",
+  "summary": "TODO summary",
+  "description": "Draft that must stay hidden.",
+  "categories": ["other"],
+  "install": { "mcp": { "transport": "stdio", "command": "npx", "args": ["-y", "draft"] } }
+}

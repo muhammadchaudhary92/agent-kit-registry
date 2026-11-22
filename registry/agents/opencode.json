@@ -1,0 +1,82 @@
+{
+  "id": "opencode",
+  "name": "OpenCode",
+  "order": 180,
+  "description": "Open-source terminal coding agent.",
+  "detect": {
+    "commands": [
+      "opencode"
+    ],
+    "paths": [
+      "{xdg_config}/opencode"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "type": "local",
+          "command": "{argv}",
+          "environment": "{env}",
+          "enabled": true
+        },
+        "http": {
+          "type": "remote",
+          "url": "{url}",
+          "headers": "{headers}",
+          "enabled": true
+        },
+        "sse": {
+          "type": "remote",
+          "url": "{url}",
+          "headers": "{headers}",
+          "enabled": true
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcp"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{xdg_config}/opencode/opencode.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/opencode.json"
+              }
+            }
+          }
+        }
+      ],
+      "notes": "Not verified. Confirm the file with the user, then pass --config-path to apply."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "guided"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

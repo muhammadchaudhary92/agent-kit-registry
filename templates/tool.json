@@ -1,0 +1,7 @@
+{
+  "id": "__ID__",
+  "name": "__NAME__",
+  "description": "TODO: what this tool does, in plain words for the user",
+  "risk": "read",
+  "default": true
+}

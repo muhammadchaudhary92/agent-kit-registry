@@ -1,0 +1,6 @@
+{
+  "id": "reverse-engineering",
+  "name": "Reverse engineering",
+  "description": "APK/EXE analysis, decompilers, disassemblers and malware triage.",
+  "order": 90
+}

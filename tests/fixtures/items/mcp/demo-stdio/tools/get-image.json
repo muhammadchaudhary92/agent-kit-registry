@@ -1,0 +1,1 @@
+{ "id": "get-image", "name": "get_image", "description": "Export a node as an image.", "risk": "read", "default": true, "order": 2 }

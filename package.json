@@ -1,0 +1,17 @@
+{
+  "name": "agent-kit-registry",
+  "version": "1.1.0",
+  "description": "Registry-driven installer for AI coding agents: MCP servers, skills, plugins and extensions. Zero dependencies.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "bin": { "agent-kit": "engine/kit.mjs" },
+  "scripts": {
+    "start": "node engine/kit.mjs start",
+    "demo": "node engine/kit.mjs start --demo",
+    "validate": "node engine/kit.mjs validate --text --strict",
+    "test": "node tests/run.mjs",
+    "check": "node engine/kit.mjs validate --text --strict && node tests/run.mjs"
+  }
+}

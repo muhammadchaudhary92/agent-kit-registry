@@ -1,0 +1,6 @@
+{
+  "id": "plugin",
+  "name": "Plugins",
+  "order": 30,
+  "description": "A plugin is a bundle that can contain several parts at once, for example skills, slash commands, sub-agents, hooks and MCP servers. It is installed with the agent's own plugin command or marketplace, so a single install can add a whole workflow."
+}

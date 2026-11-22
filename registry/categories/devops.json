@@ -1,0 +1,6 @@
+{
+  "id": "devops",
+  "name": "DevOps & Cloud",
+  "description": "CI/CD, containers, Kubernetes, cloud providers and infrastructure.",
+  "order": 60
+}

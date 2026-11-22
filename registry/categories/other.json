@@ -1,0 +1,6 @@
+{
+  "id": "other",
+  "name": "Other",
+  "description": "Anything that does not fit the other categories.",
+  "order": 120
+}

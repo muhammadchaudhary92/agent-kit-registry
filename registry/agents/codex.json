@@ -1,0 +1,90 @@
+{
+  "id": "codex",
+  "name": "OpenAI Codex CLI",
+  "order": 20,
+  "description": "OpenAI's coding agent for the terminal and IDE.",
+  "detect": {
+    "commands": [
+      "codex"
+    ],
+    "paths": [
+      "{home}/.codex"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "url": "{url}",
+          "http_headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "toml",
+          "table": [
+            "mcp_servers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{env:CODEX_HOME|{home}/.codex}/config.toml"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.codex/config.toml"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": true,
+      "post_install": "Restart Codex. Project-scope config only applies to trusted projects.",
+      "notes": "Writes a [mcp_servers.<name>] table to config.toml (append-only TOML writer)."
+    },
+    "skill": {
+      "support": "guided",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.agents/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.agents/skills"
+          }
+        }
+      },
+      "notes": "Codex skill folders are not verified: the docs mention .agents/skills, some builds also read ~/.codex/skills. Confirm with the user, then pass --skills-dir."
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "medium",
+    "sources": [
+      "https://developers.openai.com/codex/mcp"
+    ]
+  }
+}

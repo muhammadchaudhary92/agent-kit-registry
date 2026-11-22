@@ -1,0 +1,93 @@
+{
+  "id": "antigravity",
+  "name": "Google Antigravity",
+  "order": 40,
+  "description": "Google's agent-first IDE (agy CLI).",
+  "detect": {
+    "commands": [
+      "agy",
+      "antigravity"
+    ],
+    "paths": [
+      "{home}/.gemini/antigravity",
+      "{home}/.gemini/config",
+      "{localappdata}/Programs/Antigravity"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "serverUrl": "{url}",
+          "headers": "{headers}"
+        },
+        "sse": {
+          "serverUrl": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{home}/.gemini/config/mcp_config.json"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": true,
+      "post_install": "Restart Antigravity (or refresh the MCP servers list).",
+      "notes": "User scope only. Older Antigravity builds used ~/.gemini/antigravity/mcp_config.json: if the file is elsewhere, pass --config-path."
+    },
+    "skill": {
+      "support": "auto",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.gemini/config/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.agents/skills"
+          }
+        }
+      },
+      "restart_required": true
+    },
+    "plugin": {
+      "support": "auto",
+      "notes": "Installed with agy plugin install (defined by the item steps)."
+    },
+    "extension": {
+      "support": "guided"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "medium",
+    "sources": [],
+    "notes": "Checked against vendor docs during setup; layouts change between releases, re-check after updates."
+  }
+}

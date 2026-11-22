@@ -1,0 +1,6 @@
+{
+  "id": "security",
+  "name": "Security",
+  "description": "Code audit, secrets scanning, dependency checks and hardening.",
+  "order": 80
+}

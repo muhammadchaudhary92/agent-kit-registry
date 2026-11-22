@@ -1,0 +1,82 @@
+{
+  "id": "cline",
+  "name": "Cline",
+  "order": 120,
+  "description": "VS Code extension agent (saoudrizwan.claude-dev).",
+  "detect": {
+    "commands": [
+      "cline"
+    ],
+    "paths": [
+      "{appsupport}/Code/User/globalStorage/saoudrizwan.claude-dev"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}",
+          "disabled": false
+        },
+        "http": {
+          "type": "streamableHttp",
+          "url": "{url}",
+          "headers": "{headers}",
+          "disabled": false
+        },
+        "sse": {
+          "type": "sse",
+          "url": "{url}",
+          "headers": "{headers}",
+          "disabled": false
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "require_dir": true,
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{appsupport}/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": false,
+      "post_install": "Open Cline > MCP Servers to confirm it is connected.",
+      "notes": "Path is for stable VS Code. For Insiders/Cursor/VSCodium pass --config-path."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "medium",
+    "sources": [
+      "https://docs.cline.bot/mcp/configuring-mcp-servers"
+    ]
+  }
+}

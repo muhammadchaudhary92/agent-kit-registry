@@ -1,0 +1,17 @@
+{
+  "id": "demo-ext",
+  "kind": "extension",
+  "name": "Demo Extension",
+  "status": "verified",
+  "summary": "Extension for Gemini CLI.",
+  "description": "An extension that adds a command to Gemini CLI.",
+  "how_it_works": "Writes the extension manifest.",
+  "categories": ["productivity"],
+  "platforms": ["any"],
+  "author": "demo-author",
+  "source": { "homepage": "https://example.com/ext" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "variants": [
+    { "when": { "agent": ["gemini-cli"] }, "steps": [{ "type": "write-file", "path": "{home}/.gemini/extensions/demo-ext/gemini-extension.json", "content": "{\"name\":\"demo-ext\"}\n" }] }
+  ]
+}

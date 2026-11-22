@@ -1,0 +1,22 @@
+{
+  "id": "__ID__",
+  "kind": "mcp",
+  "name": "__NAME__",
+  "status": "draft",
+  "summary": "TODO: one line, max ~140 characters",
+  "description": "__DESCRIPTION__",
+  "how_it_works": "TODO: hosted server that the agent connects to over HTTP; say what data leaves the machine",
+  "categories": ["__CATEGORY__"],
+  "platforms": ["any"],
+  "tags": [],
+  "author": "__AUTHOR__",
+  "source": { "repo": "__REPO__", "homepage": "", "license": "__LICENSE__" },
+  "inputs": [],
+  "install": {
+    "mcp": {
+      "transport": "http",
+      "url": "https://TODO.example.com/mcp",
+      "headers": {}
+    }
+  }
+}

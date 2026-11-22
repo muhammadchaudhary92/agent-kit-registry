@@ -1,0 +1,100 @@
+{
+  "id": "gemini-cli",
+  "name": "Gemini CLI",
+  "order": 30,
+  "description": "Google's open-source coding agent for the terminal.",
+  "detect": {
+    "commands": [
+      "gemini"
+    ],
+    "paths": [
+      "{home}/.gemini/settings.json"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "httpUrl": "{url}",
+          "headers": "{headers}"
+        },
+        "sse": {
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "env_ref": "${__NAME__}",
+      "windows_wrap": "cmd",
+      "tool_filter": {
+        "allow_key": "includeTools"
+      },
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{home}/.gemini/settings.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.gemini/settings.json"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": true,
+      "post_install": "Restart Gemini CLI and run /mcp to check the server.",
+      "notes": "If settings.json contains comments the engine switches to guided mode (it never rewrites a file it cannot parse strictly)."
+    },
+    "skill": {
+      "support": "guided",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.gemini/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.gemini/skills"
+          }
+        }
+      },
+      "notes": "Skill folders for Gemini CLI are not verified. Confirm with the user, then pass --skills-dir."
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "auto",
+      "notes": "Installed with gemini extensions install (defined by the item steps)."
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "high",
+    "sources": [
+      "https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md"
+    ]
+  }
+}

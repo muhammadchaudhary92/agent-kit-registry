@@ -1,0 +1,60 @@
+{
+  "id": "other",
+  "name": "Other (not listed)",
+  "order": 999,
+  "description": "Any agent that is not in this list. Guided install; with a confirmed config path the engine can still write a standard mcpServers entry.",
+  "detect": {},
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "url": "{url}",
+          "headers": "{headers}"
+        },
+        "sse": {
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "scopes": {}
+        }
+      ],
+      "notes": "Look up the agent's documentation, confirm the config file with the user, then pass --config-path <file>. Only the common {\"mcpServers\": {...}} layout is written automatically."
+    },
+    "skill": {
+      "support": "guided",
+      "scopes": {},
+      "notes": "Find the agent's skills folder, confirm it with the user, then pass --skills-dir <folder>."
+    },
+    "plugin": {
+      "support": "guided"
+    },
+    "extension": {
+      "support": "guided"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

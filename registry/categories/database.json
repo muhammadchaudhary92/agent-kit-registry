@@ -1,0 +1,6 @@
+{
+  "id": "database",
+  "name": "Databases",
+  "description": "SQL and NoSQL databases, migrations, schema design and queries.",
+  "order": 50
+}

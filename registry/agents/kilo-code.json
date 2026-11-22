@@ -1,0 +1,78 @@
+{
+  "id": "kilo-code",
+  "name": "Kilo Code",
+  "order": 140,
+  "description": "VS Code extension agent (Roo/Cline fork).",
+  "detect": {
+    "paths": [
+      "{appsupport}/Code/User/globalStorage/kilocode.kilo-code"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}",
+          "disabled": false
+        },
+        "http": {
+          "type": "streamable-http",
+          "url": "{url}",
+          "headers": "{headers}"
+        },
+        "sse": {
+          "type": "sse",
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "require_dir": true,
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{appsupport}/Code/User/globalStorage/kilocode.kilo-code/settings/mcp_settings.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.kilocode/mcp.json"
+              }
+            }
+          }
+        }
+      ],
+      "notes": "Not verified. Confirm the file with the user, then pass --config-path to apply."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "demo-http",
+  "kind": "mcp",
+  "name": "Demo Hosted Server",
+  "status": "verified",
+  "summary": "Hosted MCP server over HTTP.",
+  "description": "A hosted server the agent reaches over HTTPS with a bearer token.",
+  "how_it_works": "Remote server; requests go to the vendor with your token.",
+  "categories": ["productivity"],
+  "platforms": ["any"],
+  "author": "demo-author",
+  "source": { "homepage": "https://example.com/mcp" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "inputs": [{ "id": "HTTP_TOKEN", "label": "Hosted server token", "secret": true }],
+  "install": { "mcp": { "transport": "http", "url": "https://example.com/mcp", "headers": { "Authorization": "Bearer {input:HTTP_TOKEN}" } } }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "kiro",
+  "name": "Kiro",
+  "order": 110,
+  "description": "AWS's spec-driven AI IDE.",
+  "detect": {
+    "commands": [
+      "kiro"
+    ],
+    "paths": [
+      "{home}/.kiro"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{home}/.kiro/settings/mcp.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.kiro/settings/mcp.json"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": true,
+      "post_install": "Kiro reloads MCP config automatically; restart it if the server does not appear."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "guided"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "medium",
+    "sources": [
+      "https://kiro.dev/docs/mcp/"
+    ]
+  }
+}

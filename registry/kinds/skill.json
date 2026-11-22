@@ -1,0 +1,6 @@
+{
+  "id": "skill",
+  "name": "Skills",
+  "order": 20,
+  "description": "A skill is a folder with a SKILL.md file (and optional scripts or reference files) that teaches the agent a repeatable way of doing one kind of task, such as reviewing a UI, writing a database migration or producing a report. The agent loads a skill only when the task matches, so it costs no context otherwise. Installing a skill means copying its folder into the agent's skills directory."
+}

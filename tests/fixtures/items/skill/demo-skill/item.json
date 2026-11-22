@@ -1,0 +1,15 @@
+{
+  "id": "demo-skill",
+  "kind": "skill",
+  "name": "Demo Skill",
+  "status": "verified",
+  "summary": "Bundled demo skill.",
+  "description": "A skill shipped inside the registry folder.",
+  "how_it_works": "SKILL.md tells the agent how to review a UI.",
+  "categories": ["ui"],
+  "platforms": ["web"],
+  "author": "demo-author",
+  "source": { "homepage": "https://example.com/skill" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "install": { "skill": { "name": "demo-skill", "source": { "type": "bundled", "path": "files" } } }
+}

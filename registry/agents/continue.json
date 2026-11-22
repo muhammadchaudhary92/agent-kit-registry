@@ -1,0 +1,57 @@
+{
+  "id": "continue",
+  "name": "Continue",
+  "order": 150,
+  "description": "Open-source AI assistant for VS Code and JetBrains.",
+  "detect": {
+    "paths": [
+      "{home}/.continue"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "name": "{name}",
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "name": "{name}",
+          "type": "streamable-http",
+          "url": "{url}"
+        },
+        "sse": {
+          "name": "{name}",
+          "type": "sse",
+          "url": "{url}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [],
+      "notes": "Continue uses YAML (one file per server in .continue/mcpServers/). The engine shows the fields; create <name>.yaml by hand."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

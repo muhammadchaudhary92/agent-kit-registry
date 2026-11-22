@@ -1,0 +1,6 @@
+{
+  "id": "productivity",
+  "name": "Productivity",
+  "description": "Project management, calendars, mail, chat and general workflow helpers.",
+  "order": 110
+}

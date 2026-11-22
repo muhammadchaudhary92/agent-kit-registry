@@ -1,0 +1,6 @@
+{
+  "id": "mcp",
+  "name": "MCP servers",
+  "order": 10,
+  "description": "MCP (Model Context Protocol) servers give an AI agent new abilities by connecting it to outside tools and data, for example design files, databases, browsers, issue trackers or cloud APIs. After installation the agent can call the server's tools by itself. Some servers need an API key or token, and you can choose which of a server's tools to enable."
+}

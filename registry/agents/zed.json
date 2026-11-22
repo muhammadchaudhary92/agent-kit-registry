@@ -1,0 +1,74 @@
+{
+  "id": "zed",
+  "name": "Zed",
+  "order": 160,
+  "description": "High-performance editor with an agent panel.",
+  "detect": {
+    "commands": [
+      "zed"
+    ],
+    "paths": [
+      "{xdg_config}/zed"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "source": "custom",
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "context_servers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "windows": "{appdata}/Zed/settings.json",
+                "unix": "{xdg_config}/zed/settings.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.zed/settings.json"
+              }
+            }
+          }
+        }
+      ],
+      "notes": "Zed settings.json is JSONC (comments), so the engine only shows the snippet. Add it under \"context_servers\"."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "guided"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

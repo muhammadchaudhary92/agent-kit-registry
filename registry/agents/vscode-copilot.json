@@ -1,0 +1,99 @@
+{
+  "id": "vscode-copilot",
+  "name": "VS Code (GitHub Copilot)",
+  "order": 80,
+  "description": "Visual Studio Code with Copilot agent mode.",
+  "detect": {
+    "commands": [
+      "code"
+    ],
+    "paths": [
+      "{appsupport}/Code/User"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "type": "stdio",
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "type": "http",
+          "url": "{url}",
+          "headers": "{headers}"
+        },
+        "sse": {
+          "type": "sse",
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "servers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "windows": "{appdata}/Code/User/mcp.json",
+                "macos": "{home}/Library/Application Support/Code/User/mcp.json",
+                "linux": "{xdg_config}/Code/User/mcp.json"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.vscode/mcp.json"
+              }
+            }
+          }
+        }
+      ],
+      "notes": "VS Code MCP support is changing quickly, so this adapter is guided. Confirm the file with the user, then pass --config-path to apply."
+    },
+    "skill": {
+      "support": "guided",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.copilot/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.github/skills"
+          }
+        }
+      },
+      "notes": "Not verified. Confirm with the user, then pass --skills-dir."
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "auto",
+      "notes": "Use the code --install-extension command in the item steps."
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": [
+      "https://code.visualstudio.com/docs/copilot/customization/mcp-servers"
+    ]
+  }
+}

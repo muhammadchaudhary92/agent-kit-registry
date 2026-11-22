@@ -1,0 +1,24 @@
+{
+  "id": "demo-plugin",
+  "kind": "plugin",
+  "name": "Demo Plugin",
+  "status": "verified",
+  "summary": "Plugin with explicit install steps.",
+  "description": "A plugin installed through explicit steps.",
+  "how_it_works": "Runs a command and writes a config file.",
+  "categories": ["productivity"],
+  "platforms": ["any"],
+  "author": "demo-author",
+  "source": { "homepage": "https://example.com/plugin" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "variants": [
+    {
+      "when": { "agent": ["claude-code"] },
+      "note": "Test steps",
+      "steps": [
+        { "type": "command", "command": "node", "args": ["-e", "require('fs').writeFileSync(process.argv[1], 'plugin-ran')", "{tmp}{sep}kit-plugin-marker.txt"], "description": "Run a command" },
+        { "type": "write-file", "path": "{home}/.demo-plugin/config.txt", "content": "hello {os}\n" }
+      ]
+    }
+  ]
+}

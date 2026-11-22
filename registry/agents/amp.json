@@ -1,0 +1,67 @@
+{
+  "id": "amp",
+  "name": "Amp",
+  "order": 170,
+  "description": "Sourcegraph's coding agent.",
+  "detect": {
+    "commands": [
+      "amp"
+    ],
+    "paths": [
+      "{xdg_config}/amp"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "amp.mcpServers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{xdg_config}/amp/settings.json"
+              }
+            }
+          }
+        }
+      ],
+      "notes": "Not verified. Confirm the file with the user, then pass --config-path to apply."
+    },
+    "skill": {
+      "support": "none"
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "id": "mistral-vibe",
+  "name": "Mistral Vibe (Code mode)",
+  "order": 50,
+  "description": "Mistral's coding agent CLI.",
+  "detect": {
+    "commands": [
+      "vibe"
+    ],
+    "paths": [
+      "{home}/.vibe"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "auto",
+      "transports": [
+        "stdio",
+        "http"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "name": "{name}",
+          "transport": "stdio",
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}"
+        },
+        "http": {
+          "name": "{name}",
+          "transport": "streamable-http",
+          "url": "{url}",
+          "headers": "{headers}"
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "toml",
+          "array_table": [
+            "mcp_servers"
+          ],
+          "name_field": "name",
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{env:VIBE_HOME|{home}/.vibe}/config.toml"
+              }
+            },
+            "project": {
+              "file": {
+                "all": "{project}/.vibe/config.toml"
+              }
+            }
+          }
+        }
+      ],
+      "restart_required": true,
+      "post_install": "Restart Vibe so it re-reads config.toml.",
+      "notes": "Appends a [[mcp_servers]] block. Field names follow the Vibe README; verify on the first real install."
+    },
+    "skill": {
+      "support": "guided",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.vibe/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.vibe/skills"
+          }
+        }
+      },
+      "notes": "Skill folders for Vibe are not verified. Confirm with the user, then pass --skills-dir."
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "medium",
+    "sources": [],
+    "notes": "TOML [[mcp_servers]] layout checked during setup; field names from the project README."
+  }
+}

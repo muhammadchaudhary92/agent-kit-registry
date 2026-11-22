@@ -1,0 +1,98 @@
+{
+  "id": "copilot-cli",
+  "name": "GitHub Copilot CLI",
+  "order": 90,
+  "description": "GitHub's terminal coding agent.",
+  "detect": {
+    "commands": [
+      "copilot"
+    ],
+    "paths": [
+      "{home}/.copilot"
+    ]
+  },
+  "kinds": {
+    "mcp": {
+      "support": "guided",
+      "transports": [
+        "stdio",
+        "http",
+        "sse"
+      ],
+      "default_scope": "user",
+      "shape": {
+        "stdio": {
+          "type": "local",
+          "command": "{command}",
+          "args": "{args}",
+          "env": "{env}",
+          "tools": [
+            "*"
+          ]
+        },
+        "http": {
+          "type": "http",
+          "url": "{url}",
+          "headers": "{headers}",
+          "tools": [
+            "*"
+          ]
+        },
+        "sse": {
+          "type": "sse",
+          "url": "{url}",
+          "headers": "{headers}",
+          "tools": [
+            "*"
+          ]
+        }
+      },
+      "windows_wrap": "cmd",
+      "methods": [
+        {
+          "method": "config-file",
+          "format": "json",
+          "root": [
+            "mcpServers"
+          ],
+          "scopes": {
+            "user": {
+              "file": {
+                "all": "{home}/.copilot/mcp-config.json"
+              }
+            }
+          }
+        }
+      ],
+      "notes": "Not verified. Confirm the file with the user, then pass --config-path to apply."
+    },
+    "skill": {
+      "support": "guided",
+      "default_scope": "user",
+      "scopes": {
+        "user": {
+          "dir": {
+            "all": "{home}/.copilot/skills"
+          }
+        },
+        "project": {
+          "dir": {
+            "all": "{project}/.github/skills"
+          }
+        }
+      },
+      "notes": "Not verified. Confirm with the user, then pass --skills-dir."
+    },
+    "plugin": {
+      "support": "none"
+    },
+    "extension": {
+      "support": "none"
+    }
+  },
+  "verified": {
+    "date": "2026-11-20",
+    "confidence": "low",
+    "sources": []
+  }
+}

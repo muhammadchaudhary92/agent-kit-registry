@@ -1,0 +1,23 @@
+{
+  "id": "demo-stdio",
+  "kind": "mcp",
+  "name": "Demo Design Server",
+  "status": "verified",
+  "summary": "Demo MCP server that reads design files.",
+  "description": "Reads design files and returns layout data to the agent.",
+  "how_it_works": "Runs locally through npx and calls the vendor API with your token.",
+  "categories": ["ui"],
+  "platforms": ["web", "android"],
+  "tags": ["design", "figma"],
+  "author": "demo-author",
+  "source": { "repo": "demo-author/demo-stdio", "license": "MIT" },
+  "stars": { "count": 1200, "as_of": "2026-11-20" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "requires": { "commands": [{ "name": "node", "min": "18" }] },
+  "inputs": [
+    { "id": "DEMO_TOKEN", "label": "Demo API token", "secret": true, "help": "Create it in the vendor settings", "example": "demo_abc123", "pattern": "^demo_[a-z0-9]+$" }
+  ],
+  "install": {
+    "mcp": { "transport": "stdio", "command": "npx", "args": ["-y", "demo-mcp@1.0.0", "--stdio"], "env": { "DEMO_API_KEY": "{input:DEMO_TOKEN}" } }
+  }
+}

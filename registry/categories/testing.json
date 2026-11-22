@@ -1,0 +1,6 @@
+{
+  "id": "testing",
+  "name": "Testing & QA",
+  "description": "Unit, integration and end-to-end testing, browser automation and debugging.",
+  "order": 70
+}

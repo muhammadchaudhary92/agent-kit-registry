@@ -1,0 +1,15 @@
+{
+  "id": "demo-gh-skill",
+  "kind": "skill",
+  "name": "Demo GitHub Skill",
+  "status": "verified",
+  "summary": "Skill downloaded from GitHub.",
+  "description": "A skill that is fetched from a GitHub folder.",
+  "how_it_works": "Downloads the folder at install time.",
+  "categories": ["backend"],
+  "platforms": ["backend"],
+  "author": "demo",
+  "source": { "repo": "demo/skills" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "install": { "skill": { "name": "gh-skill", "source": { "type": "github", "repo": "demo/skills", "path": "skills/gh-skill", "ref": "0123456789abcdef0123456789abcdef01234567" } } }
+}

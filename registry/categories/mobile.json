@@ -1,0 +1,6 @@
+{
+  "id": "mobile",
+  "name": "Mobile",
+  "description": "Android, iOS, Flutter and React Native development.",
+  "order": 40
+}

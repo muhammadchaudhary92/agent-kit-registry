@@ -1,0 +1,6 @@
+{
+  "id": "backend",
+  "name": "Backend & APIs",
+  "description": "Server code, REST/GraphQL APIs, frameworks and service integration.",
+  "order": 30
+}

@@ -1,0 +1,17 @@
+{
+  "id": "demo-filtered",
+  "kind": "mcp",
+  "name": "Demo Filtered Server",
+  "status": "verified",
+  "summary": "Server that accepts a --tools flag.",
+  "description": "A server whose tool list can be restricted with a command line flag.",
+  "how_it_works": "Runs locally; --tools limits the exposed tools.",
+  "categories": ["testing"],
+  "platforms": ["any"],
+  "author": "demo-author",
+  "source": { "repo": "demo-author/demo-filtered" },
+  "verified": { "date": "2026-11-20", "by": "tests" },
+  "install": {
+    "mcp": { "transport": "stdio", "command": "npx", "args": ["-y", "demo-filtered"], "tool_selection": { "type": "args-join", "flag": "--tools", "sep": "," } }
+  }
+}

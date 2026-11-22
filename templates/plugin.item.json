@@ -1,0 +1,30 @@
+{
+  "id": "__ID__",
+  "kind": "plugin",
+  "name": "__NAME__",
+  "status": "draft",
+  "summary": "TODO: one line, max ~140 characters",
+  "description": "__DESCRIPTION__",
+  "how_it_works": "TODO: what the plugin bundles (skills, commands, agents, hooks, MCP servers) and how the agent loads it",
+  "categories": ["__CATEGORY__"],
+  "platforms": ["any"],
+  "tags": [],
+  "author": "__AUTHOR__",
+  "source": { "repo": "__REPO__", "homepage": "", "license": "__LICENSE__" },
+  "variants": [
+    {
+      "when": { "agent": ["claude-code"] },
+      "note": "Installed through a plugin marketplace",
+      "steps": [
+        { "type": "command", "command": "claude", "args": ["plugin", "marketplace", "add", "TODO-owner/TODO-marketplace-repo"], "description": "Add the marketplace", "allow_fail": true },
+        { "type": "command", "command": "claude", "args": ["plugin", "install", "TODO-plugin@TODO-marketplace"], "description": "Install the plugin" }
+      ]
+    },
+    {
+      "when": { "agent": ["antigravity"] },
+      "steps": [
+        { "type": "command", "command": "agy", "args": ["plugin", "install", "TODO-plugin-source"], "description": "Install the plugin" }
+      ]
+    }
+  ]
+}

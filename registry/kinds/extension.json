@@ -1,0 +1,6 @@
+{
+  "id": "extension",
+  "name": "Extensions",
+  "order": 40,
+  "description": "An extension adds a feature to the agent's own app, editor or CLI, such as a VS Code or Gemini CLI extension, an integration panel or a theme. It is installed through the application's extension system and usually needs a restart."
+}

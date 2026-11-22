@@ -1,0 +1,1 @@
+{ "id": "delete-file", "name": "delete_file", "description": "Delete a design file.", "risk": "destructive", "default": false, "order": 3 }
