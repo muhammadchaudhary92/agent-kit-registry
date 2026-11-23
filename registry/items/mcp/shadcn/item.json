@@ -1,1 +1,64 @@
-
+{
+  "id": "shadcn",
+  "kind": "mcp",
+  "name": "shadcn/ui MCP Server",
+  "status": "draft",
+  "summary": "Official shadcn MCP: lets your AI browse, search and add shadcn/ui components from any registry.",
+  "description": "The official MCP server that ships inside the shadcn CLI. It lets your AI assistant list, search and view components, blocks and templates from the default shadcn registry and from any other registry set up in your project (public, private or third-party), find usage examples, and get the exact add command to install them. It needs a project that has a components.json file.",
+  "how_it_works": "Starts locally over stdio with 'npx shadcn mcp' and reads components.json from the folder your AI agent is running in. Its seven tools only read data: they fetch registry data over HTTPS (the default shadcn registry plus any registry listed in components.json; private registries use tokens from the project's .env files, and GitHub-hosted registries can use your gh login or GH_TOKEN) and send text back to the AI. To install something, the tool get_add_command_for_items returns the 'npx shadcn add ...' command and the AI runs it itself. The server writes no project files.",
+  "categories": [
+    "ui",
+    "frontend"
+  ],
+  "platforms": [
+    "web"
+  ],
+  "tags": [
+    "shadcn",
+    "shadcn-ui",
+    "react",
+    "nextjs",
+    "vite",
+    "tailwind",
+    "components",
+    "registry",
+    "blocks",
+    "design-system"
+  ],
+  "author": "shadcn",
+  "source": {
+    "repo": "shadcn-ui/ui",
+    "homepage": "https://ui.shadcn.com/docs/mcp",
+    "license": "MIT"
+  },
+  "stars": {
+    "count": 117400,
+    "as_of": "2026-06-27"
+  },
+  "requires": {
+    "commands": [
+      {
+        "name": "node",
+        "min": "20.18.1",
+        "hint": "shadcn needs Node.js 20.18.1 or newer: https://nodejs.org"
+      },
+      {
+        "name": "npx"
+      }
+    ]
+  },
+  "inputs": [],
+  "install": {
+    "mcp": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "shadcn@4.23.0",
+        "mcp"
+      ],
+      "server_name": "shadcn"
+    }
+  },
+  "notes": "The server reads components.json from the folder your agent starts it in, so run your AI agent inside a project that has one (new project: npx shadcn@latest init). Restart the agent and check that the 'shadcn' server is connected (Claude Code: /mcp). Then ask in plain words, for example: 'Show me all available components in the shadcn registry', 'Add the button, dialog and card components to my project' or 'Find a login form in the shadcn registry'. If the tools say no components.json was found, the agent started the server outside your project: install again for that project only by adding --scope project --project <project folder> to the install command. Private registries: put their token (for example REGISTRY_TOKEN) in the project's .env.local. If no tools appear, run npx clear-npx-cache and re-enable the server."
+}
