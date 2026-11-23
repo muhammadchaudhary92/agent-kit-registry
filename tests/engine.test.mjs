@@ -58,7 +58,12 @@ test('shipped registry has no errors or warnings (strict)', () => {
   const j = JSON.parse(r.stdout);
   assert.equal(j.ok, true, r.stdout);
   assert.equal(j.counts.agents, 20);
-  assert.deepEqual(j.counts.items, {});
+  // The shipped registry grows as the owner adds items, so only check the shape (kind -> positive count).
+  assert.equal(typeof j.counts.items, 'object');
+  for (const [kind, n] of Object.entries(j.counts.items)) {
+    assert.ok(['mcp', 'skill', 'extension', 'plugin'].includes(kind), `unknown kind in counts: ${kind}`);
+    assert.ok(Number.isInteger(n) && n > 0, `bad count for ${kind}: ${n}`);
+  }
 });
 
 test('fixture registry validates; broken data is reported', () => {
