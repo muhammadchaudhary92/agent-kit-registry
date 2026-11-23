@@ -1,0 +1,1 @@
+{ "id": "list-items-in-registries", "name": "list_items_in_registries", "description": "Lists the components, blocks and other items of one or more registries, with paging.", "risk": "read", "default": true, "order": 2 }

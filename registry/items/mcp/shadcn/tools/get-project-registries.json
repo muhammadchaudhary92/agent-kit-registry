@@ -1,0 +1,1 @@
+{ "id": "get-project-registries", "name": "get_project_registries", "description": "Lists the registries configured in the project's components.json.", "risk": "read", "default": true, "order": 1 }

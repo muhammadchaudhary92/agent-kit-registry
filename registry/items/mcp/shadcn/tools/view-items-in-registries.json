@@ -1,1 +1,1 @@
-
+{ "id": "view-items-in-registries", "name": "view_items_in_registries", "description": "Shows the details and file contents of specific registry items, for example @shadcn/button.", "risk": "read", "default": true, "order": 4 }

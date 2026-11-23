@@ -1,0 +1,1 @@
+{ "id": "get-item-examples-from-registries", "name": "get_item_examples_from_registries", "description": "Finds usage examples and demos with complete code, for example accordion-demo.", "risk": "read", "default": true, "order": 5 }

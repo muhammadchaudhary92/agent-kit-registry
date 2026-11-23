@@ -1,0 +1,1 @@
+{ "id": "search-items-in-registries", "name": "search_items_in_registries", "description": "Fuzzy-searches registries for components by name or description.", "risk": "read", "default": true, "order": 3 }

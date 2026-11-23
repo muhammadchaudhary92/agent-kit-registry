@@ -1,0 +1,1 @@
+{ "id": "get-audit-checklist", "name": "get_audit_checklist", "description": "Returns a short checklist for verifying newly added or generated components.", "risk": "read", "default": true, "order": 7 }

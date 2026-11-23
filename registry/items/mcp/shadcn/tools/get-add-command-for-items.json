@@ -1,0 +1,1 @@
+{ "id": "get-add-command-for-items", "name": "get_add_command_for_items", "description": "Returns the exact shadcn add command for the chosen items; the AI runs it to install them.", "risk": "read", "default": true, "order": 6 }
