@@ -1,0 +1,88 @@
+{
+  "id": "daisyui",
+  "kind": "plugin",
+  "name": "daisyUI Plugin for Claude Code",
+  "status": "draft",
+  "summary": "Official daisyUI plugin for Claude Code: adds the free daisyUI skill through the daisyUI plugin marketplace.",
+  "description": "The official daisyUI plugin for Claude Code. It carries the free daisyUI skill (the same content as the daisyUI Skill item): how to install and configure daisyUI 5, its class names, colors and themes, and the rules of 68 components, for projects that use Tailwind CSS 4. Because it is installed through Claude Code's own plugin system, you can see, disable or uninstall it from the /plugin screen.",
+  "how_it_works": "Runs two Claude Code commands. 'claude plugin marketplace add saadeghi/daisyui#v5.8.2' registers the official daisyUI marketplace, pinned to the 5.8.2 release tag, and 'claude plugin install daisyui@daisyui' installs the plugin from it. The plugin adds only the daisyUI skill; the same marketplace also lists the paid Blueprint MCP plugin, which is not installed here. Claude Code does not auto-update third-party marketplaces by default, so you stay on 5.8.2 until you update it yourself.",
+  "categories": [
+    "ui",
+    "frontend"
+  ],
+  "platforms": [
+    "web"
+  ],
+  "tags": [
+    "daisyui",
+    "tailwind",
+    "tailwindcss",
+    "css",
+    "components",
+    "themes",
+    "claude-code",
+    "marketplace"
+  ],
+  "author": "saadeghi",
+  "source": {
+    "repo": "saadeghi/daisyui",
+    "homepage": "https://daisyui.com/docs/plugin/claude-code/",
+    "license": "MIT"
+  },
+  "stars": {
+    "count": 42700,
+    "as_of": "2026-10-28"
+  },
+  "requires": {
+    "commands": [
+      {
+        "name": "claude",
+        "hint": "Claude Code must be installed and on your PATH: https://code.claude.com/docs/en/setup"
+      },
+      {
+        "name": "git",
+        "hint": "Claude Code needs git to download a GitHub marketplace: https://git-scm.com"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "when": {
+        "agent": [
+          "claude-code"
+        ]
+      },
+      "note": "Installed with the claude plugin commands.",
+      "steps": [
+        {
+          "type": "command",
+          "command": "claude",
+          "args": [
+            "plugin",
+            "marketplace",
+            "add",
+            "saadeghi/daisyui#v5.8.2"
+          ],
+          "allow_fail": true,
+          "timeout_sec": 180,
+          "description": "Add the daisyUI plugin marketplace (pinned to release v5.8.2)"
+        },
+        {
+          "type": "command",
+          "command": "claude",
+          "args": [
+            "plugin",
+            "install",
+            "daisyui@daisyui",
+            "--scope",
+            "{scope}"
+          ],
+          "cwd": "{work}",
+          "timeout_sec": 180,
+          "description": "Install the daisyUI plugin ({scope} scope)"
+        }
+      ]
+    }
+  ],
+  "notes": "For Claude Code only; other agents can use the daisyUI Skill item. The plugin tells Claude to use daisyUI classes every time it writes HTML or JSX, so for projects that do not use daisyUI add --scope project --project <project folder> to the install command to keep it out of your other projects. Then run /reload-plugins in Claude Code (or start a new session) and ask in plain words, for example: 'Make a login form with daisyUI'. Remove it with: claude plugin uninstall daisyui@daisyui. Do not install both this plugin and the daisyUI Skill item: they carry the same skill. daisyUI 5 needs Tailwind CSS 4 in the project."
+}
