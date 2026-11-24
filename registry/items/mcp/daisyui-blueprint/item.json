@@ -1,1 +1,88 @@
-
+{
+  "id": "daisyui-blueprint",
+  "kind": "mcp",
+  "name": "daisyUI Blueprint MCP Server (paid)",
+  "status": "draft",
+  "summary": "Official daisyUI MCP server: gives your AI daisyUI rules, page structure and exact component code on demand. Needs a paid Blueprint license.",
+  "description": "daisyUI Blueprint is the official MCP server from the daisyUI author, sold with a paid license. Instead of one static skill file it gives your AI expert tools on demand: daisyUI setup and themes, rule checks, design direction, page and layout structure, exact component syntax and a quality check of the result. It also offers conversion prompts (Tailwind CSS, Bootstrap or a screenshot to daisyUI, and an image to a daisyUI theme) and, with a Figma token, Figma-to-daisyUI conversion. You need a Blueprint license key and the email it was bought with.",
+  "how_it_works": "Starts locally over stdio with 'npx daisyui-blueprint' (a closed-source npm package from the daisyUI author, pinned here to version 1.8.2) and activates with your license key and email. Your AI then calls its tools to get daisyUI setup steps, rules, page layouts and exact component code only when it needs them, so less text sits in the AI's context than with a skill. The license key, the email and the optional Figma token are stored as environment variables in the agent's MCP config file.",
+  "categories": [
+    "ui",
+    "frontend"
+  ],
+  "platforms": [
+    "web"
+  ],
+  "tags": [
+    "daisyui",
+    "blueprint",
+    "tailwind",
+    "tailwindcss",
+    "components",
+    "themes",
+    "figma",
+    "paid"
+  ],
+  "author": "saadeghi",
+  "source": {
+    "repo": "saadeghi/daisyui",
+    "homepage": "https://daisyui.com/blueprint",
+    "license": "Paid license"
+  },
+  "stars": {
+    "count": 42700,
+    "as_of": "2026-10-28"
+  },
+  "requires": {
+    "commands": [
+      {
+        "name": "node",
+        "min": "24",
+        "hint": "The daisyui-blueprint package declares Node.js 24.x in its engines field: https://nodejs.org"
+      },
+      {
+        "name": "npx"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "id": "LICENSE",
+      "label": "Blueprint license key",
+      "secret": true,
+      "help": "From the email you receive after buying Blueprint at https://daisyui.com/blueprint"
+    },
+    {
+      "id": "EMAIL",
+      "label": "Blueprint license email",
+      "secret": false,
+      "help": "The email address the Blueprint license was bought with",
+      "example": "you@example.com",
+      "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+    },
+    {
+      "id": "FIGMA",
+      "label": "Figma personal access token (optional)",
+      "secret": true,
+      "required": false,
+      "help": "Only for Figma-to-daisyUI conversion; create it in Figma under Settings > Security > Personal access tokens"
+    }
+  ],
+  "install": {
+    "mcp": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "daisyui-blueprint@1.8.2"
+      ],
+      "env": {
+        "LICENSE": "{input:LICENSE}",
+        "EMAIL": "{input:EMAIL}",
+        "FIGMA": "{input:FIGMA}"
+      },
+      "server_name": "daisyui-blueprint"
+    }
+  },
+  "notes": "This server needs a paid Blueprint license from https://daisyui.com/blueprint (listed in Nov 2026: $22 per month or $45 per 3 months, both with a 3-day free trial, or $600 lifetime; check the site for current prices). Restart the agent, then end your prompt with 'use Blueprint MCP', for example: 'Give me a light daisyUI 5 theme with a tropical color palette. Use Blueprint MCP'. Figma-to-code is optional: to add a Figma token later, run this install again with --input FIGMA=<token> --on-conflict replace (token permissions: https://daisyui.com/blueprint/figma/). The package is closed source and pinned to 1.8.2 (the vendor docs use @latest): raise the pin only after testing a newer version. Free alternative: the daisyUI Skill item."
+}
