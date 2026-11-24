@@ -1,4 +1,4 @@
-import { listKinds, listCategories, listItems, itemSummary, toolSummary } from './query.mjs';
+import { listKinds, listCategories, listItems, itemSummary, toolSummary, itemLabel, kindSingular } from './query.mjs';
 
 export const EMPTY = 'Data not found';
 
@@ -69,7 +69,8 @@ export function itemStep(db, agentId, kind, ctx, f = {}) {
     const s = itemSummary(rec, compat);
     return {
       value: s.id,
-      label: s.name,
+      label: itemLabel(db, kind, s.name),
+      kind,
       description: s.summary,
       details: { what_it_does: s.description, how_it_works: s.how_it_works, author: s.author, stars: s.stars, license: s.license, repo: s.source && s.source.repo, categories: s.categories, platforms: s.platforms, install_mode: s.mode, needs_input: s.inputs.filter((i) => i.required).map((i) => i.label), tools_count: s.tools_count },
     };
@@ -79,7 +80,7 @@ export function itemStep(db, agentId, kind, ctx, f = {}) {
     count: options.length,
     ui: {
       behavior: 'SINGLE_SELECT',
-      title: `Pick one ${kind}`,
+      title: `Pick one ${kindSingular(db, kind)} (${options.length} found)`,
       options,
       ai_choose: { allowed: options.length > 1, rule: 'The AI may pick exactly ONE option from this list (never from outside the registry) and must match the project platform.' },
     },

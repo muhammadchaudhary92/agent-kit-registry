@@ -89,6 +89,22 @@ export function itemSummary(rec, compat) {
 
 export const toolSummary = (t) => ({ id: t.id, name: t.data.name, description: t.data.description || '', risk: t.data.risk || null, default: t.data.default !== false });
 
+/** "MCP servers" -> "MCP server", "Skills" -> "skill": what ONE item of this kind is, from registry/kinds/<id>.json. */
+export function kindSingular(db, kindId) {
+  const rec = db.kinds && db.kinds.get(kindId);
+  return String((rec && rec.data.name) || kindId).replace(/s$/i, '').replace(/^([A-Z])(?=[a-z])/, (c) => c.toLowerCase());
+}
+
+/**
+ * The name a user sees in a list or popup. Two items of different kinds can share one product name
+ * (the shadcn MCP server and the shadcn skill), so the kind must always be readable. A name that already says it
+ * stays as written ("shadcn/ui MCP Server"); a bare one gets it added ("Playwright" -> "Playwright (MCP server)").
+ */
+export function itemLabel(db, kindId, name) {
+  const word = String(kindId).replace(/[^a-z0-9]+/gi, '[- ]?');
+  return new RegExp(`\\b${word}s?\\b`, 'i').test(name) ? String(name) : `${name} (${kindSingular(db, kindId)})`;
+}
+
 function matchesSearch(rec, q) {
   const d = rec.data;
   const hay = [rec.id, d.name, d.summary, d.description, ...toArray(d.tags), ...toArray(d.categories)].join(' ').toLowerCase();

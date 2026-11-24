@@ -140,7 +140,9 @@ export function buildPlan(db, env, args) {
   const envToSet = new Map();
   let useEnvRef = false;
   if (kind === 'mcp' && scope === 'project') {
-    const used = [...JSON.stringify(install.mcp).matchAll(/\{input:([A-Z0-9_]+)\}/g)].map((m) => m[1]).filter((id) => secretIds.has(id));
+    // Only secrets that actually have a value matter here: an optional secret the user did not give is dropped from the config (dropEmpty),
+    // so it needs neither an environment-variable reference nor the "secret in a project file" refusal.
+    const used = [...JSON.stringify(install.mcp).matchAll(/\{input:([A-Z0-9_]+)\}/g)].map((m) => m[1]).filter((id) => secretIds.has(id) && inputs[id] !== undefined);
     if (used.length) {
       if (kc.env_ref) useEnvRef = true;
       else if (!args.allowSecretsInProject) throw new KitError('secret_in_project', `${a.name} has no env-variable syntax, so secrets would be written into a project file that may be committed. Use --scope user, or confirm with --allow-secrets-in-project.`);
@@ -151,7 +153,8 @@ export function buildPlan(db, env, args) {
       const id = inner.slice(6);
       const s = spec.find((x) => x.id === id);
       if (!s) return undefined;
-      if (s.secret && useEnvRef) { envToSet.set(id, s.label); return kc.env_ref.replace('__NAME__', id); }
+      // An unset ${VAR} makes Claude Code reject or silently drop the whole server entry, so never reference a variable the user has no value for.
+      if (s.secret && useEnvRef && inputs[id] !== undefined) { envToSet.set(id, s.label); return kc.env_ref.replace('__NAME__', id); }
       return inputs[id] ?? '';
     }
     return baseResolve(inner);
@@ -354,7 +357,7 @@ export function buildPlan(db, env, args) {
     project: scope === 'project' ? project : null,
     tools: toolsInfo,
     requirements,
-    inputs: spec.map((s) => ({ id: s.id, label: s.label, secret: !!s.secret, provided: inputs[s.id] !== undefined, stored_as: s.secret ? (useEnvRef ? 'environment-variable reference' : 'value in the agent config') : 'plain value' })),
+    inputs: spec.map((s) => ({ id: s.id, label: s.label, secret: !!s.secret, provided: inputs[s.id] !== undefined, stored_as: inputs[s.id] === undefined ? 'not set (left out of the config)' : s.secret ? (useEnvRef ? 'environment-variable reference' : 'value in the agent config') : 'plain value' })),
     env_to_set: [...envToSet].map(([name, label]) => ({ name, label, hint: 'Set this environment variable before starting the agent (the config only holds a reference).' })),
     actions,
     decisions,

@@ -4,7 +4,7 @@
 // Nothing in this file is data: every list, text and count comes from the registry.
 import { KitError } from './errors.mjs';
 import { toArray } from './util.mjs';
-import { findItem, listItems, listKinds, listCategories, itemSummary, toolSummary } from './query.mjs';
+import { findItem, listItems, listKinds, listCategories, itemSummary, toolSummary, itemLabel, kindSingular } from './query.mjs';
 import { detectAgents } from './detect.mjs';
 import { agentStep, EMPTY } from './wizard.mjs';
 import { buildPlan, presentPlan } from './plan.mjs';
@@ -182,7 +182,7 @@ export function drive(db, env, a, o = {}) {
       ...extraAi,
     ],
     next: next || nextCmd(st, ['--pick', '<number>']),
-    ui: { behavior: 'SINGLE_SELECT', title: question, preselect: preselect || null, options: options.map((x, i) => ({ n: i + 1, value: x.value, label: x.label, description: x.desc || '' })) },
+    ui: { behavior: 'SINGLE_SELECT', title: question, preselect: preselect || null, options: options.map((x, i) => ({ n: i + 1, value: x.value, label: x.label, description: x.desc || '', ...(x.kind ? { kind: x.kind } : {}) })) },
   });
 
   const notFound = ({ why, back, backLabel }) => screen({
@@ -300,15 +300,17 @@ export function drive(db, env, a, o = {}) {
       s.tools_count ? plural(s.tools_count, 'tool') : null,
       s.platforms[0] !== 'any' ? `platforms: ${s.platforms.join(', ')}` : null,
     ].filter(Boolean);
-    const line = [`${s.name} · ${meta}`, `   What: ${clip(s.description || s.summary)}`, s.how_it_works ? `   How: ${clip(s.how_it_works)}` : null, needs.length ? `   Needs: ${needs.join(' · ')}` : null].filter(Boolean).join('\n');
-    return { value: s.id, label: s.name, desc: s.summary || '', line };
+    // The label always says what the item is (MCP server / skill / ...), even when the registry name does not.
+    const label = itemLabel(db, st.kind, s.name);
+    const line = [`${label} · ${meta}`, `   What: ${clip(s.description || s.summary)}`, s.how_it_works ? `   How: ${clip(s.how_it_works)}` : null, needs.length ? `   Needs: ${needs.join(' · ')}` : null].filter(Boolean).join('\n');
+    return { value: s.id, label, desc: s.summary || '', line, kind: st.kind };
   });
   const itemList = found.length > 1 ? [...itemOpts, { value: 'ai', label: 'Let the AI choose for me', line: 'Let the AI choose for me (it picks ONE item from this list only)' }] : itemOpts;
   const askItem = (error, aiChoose) => choiceScreen({
     step: 'item',
     n: 4,
     title: kind.name,
-    question: `Pick one (${found.length} found)`,
+    question: `Which ${kindSingular(db, st.kind)} for ${agentName}? Pick one (${found.length} found)`,
     options: itemList,
     error,
     extraShow: aiChoose ? ['The user asked the AI to choose.'] : [],
