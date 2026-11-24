@@ -240,6 +240,40 @@ test('project scope stores env references, never raw secrets', () => {
   } finally { s.cleanup(); }
 });
 
+test('project scope: an optional secret the user did not give is left out, never an unset ${VAR} reference', () => {
+  const s = sandbox();
+  try {
+    const base = readJson(path.join(s.reg, 'items', 'mcp', 'demo-stdio', 'item.json'));
+    fs.writeFileSync(path.join(s.reg, 'items', 'mcp', 'demo-opt-secret.json'), JSON.stringify({
+      ...base, id: 'demo-opt-secret', name: 'Demo Optional Secret Server',
+      inputs: [{ id: 'OPT_KEY', label: 'Optional key', secret: true, required: false }],
+      install: { mcp: { transport: 'stdio', command: 'npx', args: ['-y', 'demo-opt-secret'], env: { OPT_KEY: '{input:OPT_KEY}', STATIC: '1' }, server_name: 'demo-opt-secret' } },
+    }));
+    const at = (agent, ...more) => ['--agent', agent, '--kind', 'mcp', '--item', 'demo-opt-secret', '--scope', 'project', '--project', s.proj, ...more];
+
+    // Not given: no env entry at all, nothing to set, and the plan says so.
+    for (const agent of ['cursor', 'gemini-cli']) {
+      const none = s.plan(at(agent)).json.plan;
+      assert.deepEqual(none.actions[0].value.env, { STATIC: '1' }, agent);
+      assert.deepEqual(none.env_to_set, [], agent);
+      assert.equal(none.inputs[0].provided, false, agent);
+      assert.match(none.inputs[0].stored_as, /^not set/, agent);
+    }
+    // Given: the config holds only the reference (each agent's own syntax) and the user is told to set the variable.
+    const cur = s.plan(at('cursor', '--input', 'OPT_KEY=opt_secret123')).json.plan;
+    assert.equal(cur.actions[0].value.env.OPT_KEY, '${env:OPT_KEY}');
+    assert.deepEqual(cur.env_to_set.map((e) => e.name), ['OPT_KEY']);
+    assert.equal(s.plan(at('gemini-cli', '--input', 'OPT_KEY=opt_secret123')).json.plan.actions[0].value.env.OPT_KEY, '${OPT_KEY}');
+    // An agent without env-variable syntax: nothing to refuse while no secret is written, refused as soon as one would be.
+    assert.equal(s.plan(at('kiro')).code, 0);
+    assert.equal(s.plan(at('kiro', '--input', 'OPT_KEY=opt_secret123')).json.error.code, 'secret_in_project');
+    // What lands on disk for the "not given" case.
+    assert.equal(s.apply(at('cursor')).json.ok, true);
+    const written = readJson(path.join(s.proj, '.cursor', 'mcp.json')).mcpServers['demo-opt-secret'];
+    assert.deepEqual(written.env, { STATIC: '1' });
+  } finally { s.cleanup(); }
+});
+
 test('tool selection: server flag, agent allow-list, all = no filter', () => {
   const s = sandbox();
   try {

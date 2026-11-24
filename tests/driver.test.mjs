@@ -8,6 +8,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { choose, parseTools } from '../engine/lib/driver.mjs';
+import { itemLabel, kindSingular } from '../engine/lib/query.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const KIT = path.join(ROOT, 'engine', 'kit.mjs');
@@ -137,8 +138,8 @@ test('demo mode: agent -> kind -> category -> item -> token -> tools -> confirm 
     assert.match(s.text, /1\. All categories \(3\)/);
     s = b.follow(s, { answer: '1' });
     assert.match(s.text, /step 4\/4 · MCP servers/);
-    assert.match(s.text, /Pick one \(3 found\)/);
-    assert.match(s.text, /Demo Design Server · ★ 1\.2k · by demo-author · auto-install/);
+    assert.match(s.text, /Which MCP server for Mistral Vibe \(Code mode\)\? Pick one \(3 found\)/);
+    assert.match(s.text, /Demo Design Server \(MCP server\) · ★ 1\.2k · by demo-author · auto-install/);
     assert.match(s.text, /What: Reads design files/);
     assert.match(s.text, /How: Runs locally through npx/);
     assert.match(s.text, /4\. Let the AI choose for me/);
@@ -307,6 +308,53 @@ test('skills and plugins go through the same screens', () => {
     assert.match(plugin.text, /Ready to install: Demo Plugin \(plugin\)/);
     assert.match(plugin.text, /• Run: node /);
   } finally { b.cleanup(); }
+});
+
+// ------------------------------------------------------------------ the kind of an item must always be readable
+test('item lists say what each item is: popup title, label and kind field (driver and list command)', () => {
+  const b = box();
+  try {
+    // A name that already says its kind must not get it twice; a bare name gets it added.
+    const base = JSON.parse(fs.readFileSync(path.join(b.reg, 'items', 'mcp', 'demo-stdio', 'item.json'), 'utf8'));
+    fs.writeFileSync(path.join(b.reg, 'items', 'mcp', 'acme-says-mcp.json'), JSON.stringify({ ...base, id: 'acme-says-mcp', name: 'Acme MCP Server' }));
+    const args = ['--agent', 'cursor', '--kind', 'mcp', '--category', '*'];
+
+    const j = JSON.parse(b.kit(['next', ...b.real, ...args, '--json']).text);
+    assert.equal(j.step, 'item');
+    assert.match(j.ui.title, /^Which MCP server for Cursor\? Pick one \(\d+ found\)$/);
+    const byValue = Object.fromEntries(j.ui.options.map((o) => [o.value, o]));
+    assert.equal(byValue['demo-stdio'].label, 'Demo Design Server (MCP server)');
+    assert.equal(byValue['acme-says-mcp'].label, 'Acme MCP Server');
+    assert.equal(byValue['demo-stdio'].kind, 'mcp');
+
+    const text = b.kit(['next', ...b.real, ...args]).text;
+    assert.match(text, /Which MCP server for Cursor\? Pick one/);
+    assert.match(text, /\d\. Demo Design Server \(MCP server\) · /);
+    assert.match(text, /\d\. Acme MCP Server · /);
+
+    const list = JSON.parse(b.kit(['items', ...b.real, ...args, '--compact']).text);
+    assert.match(list.ui.title, /^Pick one MCP server \(\d+ found\)$/);
+    assert.deepEqual(list.ui.options.filter((o) => o.value === 'acme-says-mcp' || o.value === 'demo-stdio').map((o) => [o.value, o.label, o.kind]).sort(),
+      [['acme-says-mcp', 'Acme MCP Server', 'mcp'], ['demo-stdio', 'Demo Design Server (MCP server)', 'mcp']]);
+
+    const skills = b.kit(['next', ...b.real, '--agent', 'cursor', '--kind', 'skill', '--category', '*']).text;
+    assert.match(skills, /Which skill for Cursor\? Pick one/);
+    assert.match(skills, /Demo GitHub Skill · /); // already says "Skill"
+  } finally { b.cleanup(); }
+});
+
+test('itemLabel(): the kind is added only when the name does not already say it', () => {
+  const db = { kinds: new Map([['mcp', { data: { name: 'MCP servers' } }], ['skill', { data: { name: 'Skills' } }], ['plugin', { data: { name: 'Plugins' } }]]) };
+  assert.equal(kindSingular(db, 'mcp'), 'MCP server');
+  assert.equal(kindSingular(db, 'skill'), 'skill');
+  assert.equal(itemLabel(db, 'mcp', 'Playwright'), 'Playwright (MCP server)');
+  assert.equal(itemLabel(db, 'mcp', 'shadcn/ui MCP Server'), 'shadcn/ui MCP Server');
+  assert.equal(itemLabel(db, 'mcp', 'Context7 MCP'), 'Context7 MCP');
+  assert.equal(itemLabel(db, 'skill', 'shadcn/ui'), 'shadcn/ui (skill)');
+  assert.equal(itemLabel(db, 'skill', 'shadcn/ui Skill'), 'shadcn/ui Skill');
+  assert.equal(itemLabel(db, 'skill', 'Frontend skills pack'), 'Frontend skills pack');
+  assert.equal(itemLabel(db, 'plugin', 'daisyUI for Claude Code'), 'daisyUI for Claude Code (plugin)');
+  assert.equal(itemLabel(db, 'unknown-kind', 'Thing'), 'Thing (unknown-kind)'); // no kind file: falls back to the id
 });
 
 // ------------------------------------------------------------------ how the commands are printed
