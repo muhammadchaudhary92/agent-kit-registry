@@ -1,0 +1,48 @@
+{
+  "id": "daisyui",
+  "kind": "skill",
+  "name": "daisyUI Skill",
+  "status": "draft",
+  "summary": "Official daisyUI skill: teaches your AI the correct daisyUI 5 class names, themes and setup for Tailwind CSS 4.",
+  "description": "The official daisyUI agent skill, a compact Markdown copy of the daisyUI 5 docs. It teaches your AI how to install and configure daisyUI, how to use its class names, colors and themes, and the exact structure and rules of 68 components (button, card, modal, navbar, table, drawer, tabs and more). It is free (MIT) and works in any project that uses Tailwind CSS 4, with a bundler or from a CDN link.",
+  "how_it_works": "Copies the skills/daisyui folder of saadeghi/daisyui (pinned to the v5.8.2 release commit) into your agent's skills folder: 73 Markdown files, no scripts, nothing runs at install time. When you ask for UI code, the agent reads SKILL.md and then only the guides the task needs (install, usage rules, colors and themes, configuration, and one guide per component), so it uses real daisyUI class names instead of guessing.",
+  "categories": [
+    "ui",
+    "frontend"
+  ],
+  "platforms": [
+    "web"
+  ],
+  "tags": [
+    "daisyui",
+    "tailwind",
+    "tailwindcss",
+    "css",
+    "components",
+    "themes",
+    "html",
+    "design-system"
+  ],
+  "author": "saadeghi",
+  "source": {
+    "repo": "saadeghi/daisyui",
+    "homepage": "https://daisyui.com/docs/skill/",
+    "license": "MIT"
+  },
+  "stars": {
+    "count": 42700,
+    "as_of": "2026-10-28"
+  },
+  "install": {
+    "skill": {
+      "name": "daisyui",
+      "source": {
+        "type": "github",
+        "repo": "saadeghi/daisyui",
+        "path": "skills/daisyui",
+        "ref": "43bc54e9ea25a0f26d85392c169dae6b9839d6e5"
+      }
+    }
+  },
+  "notes": "daisyUI 5 needs Tailwind CSS 4. This skill tells your AI to use daisyUI classes every time it writes HTML or JSX, so install it only for projects that use daisyUI (add --scope project --project <project folder> to the install command) and not for projects that use another component library such as shadcn/ui. Start a new session, then ask in plain words, for example: 'Make a login form with daisyUI', 'Convert this page from Tailwind CSS to daisyUI' or 'Create a light daisyUI theme with a tropical color palette'. If the project does not have daisyUI yet, the skill's install guide makes the AI run npm i -D daisyui@latest and add @plugin \"daisyui\"; to the CSS file (a CDN link also works). This is the free route; the official daisyUI MCP server (Blueprint) needs a paid license."
+}

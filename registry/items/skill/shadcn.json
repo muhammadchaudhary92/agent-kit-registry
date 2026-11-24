@@ -1,0 +1,62 @@
+{
+  "id": "shadcn",
+  "kind": "skill",
+  "name": "shadcn/ui Skill",
+  "status": "draft",
+  "summary": "Official shadcn/ui skill: teaches your AI the right way to add, style and compose shadcn components.",
+  "description": "The official shadcn/ui agent skill. It gives your AI project-aware knowledge of shadcn/ui: your framework, Tailwind version, aliases and installed components, the CLI commands (init, add, search, view, docs, diff, info), rules for forms, icons, styling and composition, theming, custom registries, presets and design-system work. It activates in any project that has a components.json.",
+  "how_it_works": "Copies the skills/shadcn folder of shadcn-ui/ui (pinned to one commit) into your agent's skills folder. It is plain Markdown plus a small helper script and images, and nothing runs at install time. When you work on shadcn UI, the agent loads SKILL.md, which tells it to read the project facts with 'npx shadcn@latest info --json' and to look up component docs with 'npx shadcn@latest docs' before writing code. In Claude Code the info command is injected automatically and the skill pre-approves running the shadcn CLI (npx, pnpm dlx or bunx shadcn@latest); other agents run it themselves.",
+  "categories": [
+    "ui",
+    "frontend"
+  ],
+  "platforms": [
+    "web"
+  ],
+  "tags": [
+    "shadcn",
+    "shadcn-ui",
+    "react",
+    "nextjs",
+    "vite",
+    "tailwind",
+    "components",
+    "presets",
+    "theming",
+    "design-system"
+  ],
+  "author": "shadcn",
+  "source": {
+    "repo": "shadcn-ui/ui",
+    "homepage": "https://ui.shadcn.com/docs/skills",
+    "license": "MIT"
+  },
+  "stars": {
+    "count": 117400,
+    "as_of": "2026-06-27"
+  },
+  "requires": {
+    "commands": [
+      {
+        "name": "node",
+        "min": "20.18.1",
+        "hint": "The skill runs the shadcn CLI, which needs Node.js 20.18.1 or newer: https://nodejs.org"
+      },
+      {
+        "name": "npx"
+      }
+    ]
+  },
+  "install": {
+    "skill": {
+      "name": "shadcn",
+      "source": {
+        "type": "github",
+        "repo": "shadcn-ui/ui",
+        "path": "skills/shadcn",
+        "ref": "bfa64ff4d1cb7317d2403ecb176df6826d4caffc"
+      }
+    }
+  },
+  "notes": "Use it inside a project that has a components.json (new project: npx shadcn@latest init). Then ask for UI work in plain words, for example: 'Add a sidebar with a user menu', 'Build a settings page with tabs and a form' or 'Switch this project to the nova preset'. It works best in Claude Code; other agents get the project facts when they run npx shadcn@latest info. It pairs well with the shadcn/ui MCP Server item (the skill covers the rules, the MCP covers registry search and install)."
+}
